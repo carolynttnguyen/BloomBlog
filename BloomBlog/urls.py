@@ -19,7 +19,8 @@ import debug_toolbar
 from django.conf import settings
 
 urlpatterns = [
-    path('', include('apps.Users.urls')),
     path('admin/', admin.site.urls),
-    path('__debug__/', include(debug_toolbar.urls))
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('', include('Users.urls')),
+    path('article/', include('article.urls', namespace ='article')),
 ]
