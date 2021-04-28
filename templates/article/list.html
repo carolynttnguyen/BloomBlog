@@ -1,0 +1,37 @@
+<!-- extends indicates that this page is inherited from the base.html file -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Write the title defined in base.html -->
+{% block title %}
+Home page
+{% endblock title %}
+
+<!-- Write content defined in base.html -->
+{% block content %}
+
+<!-- Define the div container where the article title is placed-->
+<div class=" container ">
+    <div class=" row mt-2 ">
+
+        {% for article in articles %}
+        <!-- Article content-->
+        <div class=" col-4 mb-4 ">
+            <!-- Card container-->
+            <div class=" card h-100 ">
+                <!-- Title-->
+                <h4 class=" card-header "> {{ article.title }} </h4>
+                <!-- Summary -->
+                <div class=" card-body ">
+                    <p class=" card-text "> { {article.body|slice:'100' }}...</p>
+                </div>
+                <div class=" Card-footer ">
+                    <a the href=" # " class=" BTN-BTN Primary "> Read This </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock content %}

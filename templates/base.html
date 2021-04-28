@@ -1,0 +1,30 @@
+<!-- Load static files For readers who use Django 3 to learn, change to {% load static %} -->
+{% load static %}
+
+<!DOCTYPE html >
+ <!-- Main language of the site--> 
+<html lang="zh-cn" >
+
+<head> 
+    <!-- The character encoding used by the website--> 
+    <meta charset="utf-8"> 
+    <!-- Reserve the position of the website title--> 
+    <title > {% block title %}{% endblock %} </title > 
+    <!-- Import bootstrap css file--> 
+    <link  rel =" stylesheet" href =" {% static 'bootstrap/css/bootstrap.min.css' %}"> 
+</head >
+
+<body> 
+    <!-- Introduce the navigation bar -->
+    {% include 'header.html' %}
+    <!-- Reserve the location of the specific page -->
+    {% block content %}{% endblock content %}
+    <!-- Introduce footnote-->
+    {% include 'footer.html' %}
+    <!-- bootstrap.js relies on jquery.js and popper.js, so introduce here --> 
+    <script  src =" {% static 'jquery/jquery-3.3.1.js' %} "> </script>
+    <script  src =" https://cdn.jsdelivr.net/npm/popper.js@1.16.1-lts/dist/umd/popper.min.js "> </script>
+    <script src ="{% static 'bootstrap/js/bootstrap.min.js' %} ></script> 
+</body>
+
+</html>
