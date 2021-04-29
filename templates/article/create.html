@@ -1,0 +1,33 @@
+<!-- inherit base template -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- title defined in base.html -->
+
+{% block title %} Write Article {% endblock title %}
+
+<!-- write content defined in base.html -->
+{% block content %}
+<!-- form -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <br>
+            <form action="." method="post">
+                {% csrf_token %}
+                <!-- article title -->
+                <div class="form-group">
+                    <label for="title">Article Title</label>
+                    <input type="text" class="form-contril" id="title" name="title">
+                </div>
+                <!-- article body -->
+                <div class="form-group">
+                    <label for="body">Article Body</label>
+                    <textarea name="body" id="body" rows="12" type="text" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Complete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

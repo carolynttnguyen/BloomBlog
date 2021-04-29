@@ -12,11 +12,30 @@
     <div class="row">
         <!-- article title and author -->
         <h1 class='col-12 mt-4 mb-4'>{{article.title}}</h1>
-        <div class="col-12 alert alert-success">Author: {{article.author}}</div>
+        <div class="col-12 alert alert-success">Author: {{article.author}}
+            <a href="{% url 'article:article_delete' article.id %}">Delete</a>
+        </div>
         <!-- article text -->
         <div class="col-12">
             <p>{{ article.body|safe }}</p>
         </div>
     </div>
 </div>
+
+<script>
+    // function to delete article
+    function confirm_delete() {
+        layer.open({
+            // pop-up window
+            title: "Confirm to Delete",
+            // body
+            content : "Are you sure you want to delete this Article?",
+            // callback function called after clicking th OK button
+            yes: function(index, layero){
+                //specify URL
+                location.href='{% url "article:article_delete" article.id %}'
+            },
+        })
+    }
+</script>
 {% endblock content %}
