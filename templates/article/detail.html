@@ -1,0 +1,22 @@
+<!-- inherit base template -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- title defined in base.html -->
+{% block title %}
+    Article Details
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- article title and author -->
+        <h1 class='col-12 mt-4 mb-4'>{{article.title}}</h1>
+        <div class="col-12 alert alert-success">Author: {{article.author}}</div>
+        <!-- article text -->
+        <div class="col-12">
+            <p>{{article.body|safe}}</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
