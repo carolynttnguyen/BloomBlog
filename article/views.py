@@ -52,6 +52,14 @@ def article_details(request,id):
 
 def article_delete(request, id):
     # capture article id to be deleted
-    article = ArticlePost.objects(id=id)
+    article = ArticlePost.objects.get(id = id)
     article.delete()
     return redirect("article:article_list")
+
+def article_safe_delete(request, id):
+    if request.method =='POST':
+        article = ArticlePost.objects.get(id=id)
+        article.delete()
+        return redirect('article:article_list')
+    else:
+        return HttpResponse("Only allow POSt requests!")

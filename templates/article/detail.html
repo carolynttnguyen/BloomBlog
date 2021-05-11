@@ -8,12 +8,20 @@
 {% endblock title %}
 
 {% block content %}
+
+<!-- Article Details -->
 <div class="container">
     <div class="row">
         <!-- article title and author -->
         <h1 class='col-12 mt-4 mb-4'>{{article.title}}</h1>
         <div class="col-12 alert alert-success">Author: {{article.author}}
-            <a href="{% url 'article:article_delete' article.id %}">Delete</a>
+            <!-- <a href="#" onclick="confirm_delete()">Delete Article</a> -->
+            <a href="#" onclick="confirm_safe_delete()">Delete Article</a>
+            <form action="{% url 'article:article_safe_delete' article.id %}" style="display: none;" id="safe_delete" method="POST">
+                {% csrf_token %}
+                <button type="submit">Send</button>
+            </form>
+            <!-- <a href="{% url 'article:article_delete' article.id %}">Delete</a> -->
         </div>
         <!-- article text -->
         <div class="col-12">
@@ -34,6 +42,18 @@
             yes: function(index, layero){
                 //specify URL
                 location.href='{% url "article:article_delete" article.id %}'
+            },
+        })
+    }
+
+    function confirm_safe_delete() {
+        layer.open({
+            // pop-up window
+            title: "Confirm to Delete",
+            content : "Are you sure you want to delete this Article?",
+            yes: function(index, layero){
+                $('form#safe_delete button').click();
+                layer.close(index);
             },
         })
     }
