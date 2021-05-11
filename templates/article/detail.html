@@ -16,7 +16,8 @@
         <h1 class='col-12 mt-4 mb-4'>{{article.title}}</h1>
         <div class="col-12 alert alert-success">Author: {{article.author}}
             <!-- <a href="#" onclick="confirm_delete()">Delete Article</a> -->
-            <a href="#" onclick="confirm_safe_delete()">Delete Article</a>
+            · <a href="#" onclick="confirm_safe_delete()">Delete Article</a>
+            · <a href="{% url 'article:article_update' article.id %}">Edit Article</a>
             <form action="{% url 'article:article_safe_delete' article.id %}" style="display: none;" id="safe_delete" method="POST">
                 {% csrf_token %}
                 <button type="submit">Send</button>
