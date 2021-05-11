@@ -23,4 +23,6 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     # path('', include('Users.urls')),
     path('article/', include('article.urls', namespace ='article')),
+    # User Management
+    path('userprofile/', include('userprofile.urls', namespace='userprofile')),
 ]
