@@ -18,7 +18,8 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.username}}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a href="{% url 'userprofile:logout'%}" class="dropdown-item">Logout</a>
+                        <a href="#"  class="dropdown-item" onclick="user_delete()"> Delete User </a>
+                        <a href="{% url 'userprofile:logout'%}" class="dropdown-item"> Logout </a>
                     </div>
                 </li>
                 {% else %}
@@ -28,6 +29,26 @@
                 {% endif %}
             </ul>
         </div>
-
     </div>
 </nav>
+
+{% if user.is_authenticated %}
+<form action="{% url 'userprofile:delete' user.id %}" id="user_delete" style="display:none" method="POSt">
+    {% csrf_token %}
+    <button type="submit"> Send </button>
+</form>
+
+<script>
+    function user_delete(){
+        // call layer pop up window component
+        layer.open({
+            title: "Confirm to delete",
+            content: "Confirm to delete User Information?",
+            yes: function (index, layero){
+                $('form#user_delete button').click();
+                layer.close(index);
+            }
+        })
+    }
+</script>
+{% endif %}

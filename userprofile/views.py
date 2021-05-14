@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from .forms import UserLoginForm, UserRegisterForm
+# decorator to verify login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def user_register(request):
@@ -54,3 +56,18 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('article:article_list')
+
+
+@login_required(login_url='/userprofile/login/')
+def user_delete(request, id):
+    if request.method == 'POST':
+        user = User.objects.get(id=id)
+        # verify logged in user
+        if request.User == user:
+            logout(request)
+            user.delete()
+            return redirect('article:article_list')
+        else:
+            return HttpResponse('You do not have permission to delete User')
+    else:
+        return HttpResponse('Submit a POST request.')
