@@ -148,3 +148,7 @@ EMAIL_USE_TLS = True
 # default sender
 
 DEFAULT_FROM_EMAIL = "ayecarolynn@gmail.com"
+
+# media file addy
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
