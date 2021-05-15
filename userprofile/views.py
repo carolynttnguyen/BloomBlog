@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from .forms import UserLoginForm, UserRegisterForm
 # decorator to verify login
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileForm
+from .models import Profile
 # Create your views here.
 
 def user_register(request):
@@ -71,3 +74,35 @@ def user_delete(request, id):
             return HttpResponse('You do not have permission to delete User')
     else:
         return HttpResponse('Submit a POST request.')
+
+# Edit User Info
+@login_required(login_url='/userprofile/login/')
+def profile_edit(request, id):
+    user = User.objects.get(id=id)
+    # user_id is a field auto generated b one to one
+    if Profile.objects.filter(user_id=id).exists():
+        profile = Profile.objects.get(user_id=id)
+    else:
+        profile = Profile.objects.create(user=user)
+    if request.method == 'POST':
+        if request.user != user:
+            return HttpResponse('You do not have permission to edit this User info!')
+        profile_form = ProfileForm(data=request.POST)
+        if profile_form.is_valid():
+            profile_cd = profile_form.cleaned_data
+            profile.phone = profile_cd['phone']
+            profile.bio = profile_cd['bio']
+            profile.save()
+            return redirect('userprofile:edit', id=id)
+        else:
+            return HttpResponse('The registration form is entered incorrectly. Please re-enter.')
+    elif request.method == 'GET':
+        profile_form= ProfileForm()
+        context = {
+            'profile_form': profile_form,
+            'profile': profile,
+            'user': user,
+        }
+        return render (request, 'userprofile/edit.html', context)
+    else:
+        return HttpResponse('Please use GET or POST request.')

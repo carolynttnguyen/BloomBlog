@@ -25,4 +25,6 @@ urlpatterns = [
     path('article/', include('article.urls', namespace ='article')),
     # User Management
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
+    # PW reset
+    path('password-reset/', include('password_reset.urls')),
 ]

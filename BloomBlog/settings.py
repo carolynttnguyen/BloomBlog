@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'password_reset',
     'userprofile',
     'article',
     'django.contrib.admin',
@@ -132,3 +133,18 @@ INTERNAL_IPS = [
 STATICFILES_DIRS  = (
     os.path.join ( BASE_DIR , "static" ),
 )
+
+# SMTP server, change the smtp of mailbox
+EMAIL_HOST = 'smtp.gmail.com'
+
+# change ur own mailbox name
+EMAIL_HOST_USER = 'ayecarolynn@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_password'
+# send mail port
+EMAIL_PORT = 25
+# whether to use TLS
+EMAIL_USE_TLS = True
+
+# default sender
+
+DEFAULT_FROM_EMAIL = "ayecarolynn@gmail.com"

@@ -19,6 +19,7 @@
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.username}}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a href="#"  class="dropdown-item" onclick="user_delete()"> Delete User </a>
+                        <a href="{% url 'userprofile:edit' user.id %}" class="dropdown-item">Profile</a>
                         <a href="{% url 'userprofile:logout'%}" class="dropdown-item"> Logout </a>
                     </div>
                 </li>

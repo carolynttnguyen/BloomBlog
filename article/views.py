@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from .models import ArticlePost
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import markdown
 
 # CREATE
+@login_required(login_url='/userprofile/login/')
 def article_create(request):
     # if user submits data
     if request.method == "POST":
@@ -16,7 +18,7 @@ def article_create(request):
             # save data, but not to db for now
             new_article = article_post_form.save(commit=False)
             # specify user id in db as author
-            new_article.author=User.objects.get(id=1)
+            new_article.author=User.objects.get(id=request.User.id)
             new_article.save()
             return redirect("article:article_list")
             # if data suer enter is invalid
