@@ -5,6 +5,10 @@ from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import markdown
+# paging module
+from django.core.paginator import Paginator
+
+
 
 # CREATE
 @login_required(login_url='/userprofile/login/')
@@ -18,7 +22,7 @@ def article_create(request):
             # save data, but not to db for now
             new_article = article_post_form.save(commit=False)
             # specify user id in db as author
-            new_article.author=User.objects.get(id=request.User.id)
+            new_article.author= User.objects.get(id= request.user.id)
             new_article.save()
             return redirect("article:article_list")
             # if data suer enter is invalid
@@ -35,7 +39,12 @@ def article_create(request):
 # Show All article_safe_delete
 def article_list(request):
     # combine all blog post
-    articles = ArticlePost.objects.all()
+    articles_list = ArticlePost.objects.all()
+    # display 1 article per page
+    paginator = Paginator(article_list, 1)
+    # get page number in url
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
     # objects that ned to be passes to templates
     context = {
         'articles': articles

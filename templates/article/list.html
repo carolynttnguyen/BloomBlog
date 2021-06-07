@@ -33,5 +33,31 @@
         {% endfor %}
 
     </div>
+
+     <!-- page number nav -->
+     <div class="pagination row">
+        <div class="m-auto">
+            <span class="step-links">
+                <!-- if it is not the first page, display up button -->
+                {% if articles.has_previous %}
+                <a href="? =. 1 Page" class="btn btn=success">
+                    << 1
+                </a>
+                <span> ... </span>
+                <a href="? Page articles.previous_page_number = {{}}" class="BTN BTN-secondary"></a>
+                {% endif %}
+
+                <!-- current page -->
+                <span class="current btn btn-dange btn-lg"> {{articles.number}}</span>
+
+                <!-- if it is not the last page, the down button is displayed -->
+                {% if articles.has_next %}
+                <a href="? Page article.next_page_number" class="btn btn-secondary">{{articles.next_page_number}}</a>
+                <span> ... </span>
+                <a href="? Page articles.paginator.num_pages = {{}}" class="btn" btn-success>{{articles.paginator.num_pages}}</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
 </div>
 {% endblock content %}
