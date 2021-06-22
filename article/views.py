@@ -1,13 +1,33 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import ArticlePost
-from .forms import ArticlePostForm
+# Users
 from django.contrib.auth.models import User
+# HttpResponse
+from django.http import HttpResponse
+# article post model
+from .models import ArticlePost
+# Article form
+from .forms import ArticlePostForm
+# Login
 from django.contrib.auth.decorators import login_required
+# Markdown
 import markdown
-# paging module
+# Pagination module
 from django.core.paginator import Paginator
 
+# READ / Show All article_safe_delete
+def article_list(request):
+    # combine all blog post
+    articles_list = ArticlePost.objects.all()
+    # display 1 article per page
+    paginator = Paginator(article_list, 1)
+    # get page number in url
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+    # objects that needs to be passes to templates
+    context = {
+        'articles': articles
+    }
+    return render(request, 'article/list.html', context)
 
 
 # CREATE
@@ -35,21 +55,6 @@ def article_create(request):
             'article_post_form' : article_post_form,
         }
         return render(request, 'article/create.html', context)
-
-# Show All article_safe_delete
-def article_list(request):
-    # combine all blog post
-    articles_list = ArticlePost.objects.all()
-    # display 1 article per page
-    paginator = Paginator(article_list, 1)
-    # get page number in url
-    page = request.GET.get('page')
-    articles = paginator.get_page(page)
-    # objects that ned to be passes to templates
-    context = {
-        'articles': articles
-    }
-    return render(request, 'article/list.html', context)
 
 # READ
 def article_details(request,id):

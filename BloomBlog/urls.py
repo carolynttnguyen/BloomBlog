@@ -22,9 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    # path('', include('Users.urls')),
     path('article/', include('article.urls', namespace ='article')),
-    # User Management
+    # User Managements
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
     # PW reset
     path('password-reset/', include('password_reset.urls')),

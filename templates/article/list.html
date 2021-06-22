@@ -4,7 +4,7 @@
 
 <!-- Write the title defined in base.html -->
 {% block title %}
-    Home page
+Home
 {% endblock title %}
 
 <!-- Write content defined in base.html -->
@@ -20,44 +20,57 @@
             <!-- Card container-->
             <div class=" card h-100 ">
                 <!-- Title-->
-                <h4 class=" card-header "> {{ article.title }} </h4>
+                <h4 class=" card-header "> {{article.title}} </h4>
                 <!-- Summary -->
                 <div class=" card-body ">
-                    <p class=" card-text "> {{ article.body|slice:'100' }}</p>
+                    <p class=" card-text "> {{article.body|slice:'100'}}...</p>
                 </div>
+                <!-- footnote -->
                 <div class=" Card-footer ">
-                    <a href="{% url 'article:article_detail' article.id %}" class=" BTN-BTN Primary "> Read This </a>
+                    <a href="{% url 'article:article_detail' article.id %}" class=" btn btn-Primary "> Read This </a>
                 </div>
             </div>
         </div>
         {% endfor %}
 
-    </div>
 
-     <!-- page number nav -->
-     <div class="pagination row">
-        <div class="m-auto">
-            <span class="step-links">
-                <!-- if it is not the first page, display up button -->
-                {% if articles.has_previous %}
-                <a href="? =. 1 Page" class="btn btn=success">
-                    << 1
-                </a>
-                <span> ... </span>
-                <a href="? Page articles.previous_page_number = {{}}" class="BTN BTN-secondary"></a>
-                {% endif %}
+        <div>
+            <!-- Page Nav-->
+            <div class="pagination row">
+                <div class="m-auto">
+                    <span class="step-links">
+                        <!-- if it is not the first page, display up button -->
+                        {% if articles.has_previous %}
+                        <a href="?page=1" class="btn btn-success">
+                            &laquo; 1
+                        </a>
 
-                <!-- current page -->
-                <span class="current btn btn-dange btn-lg"> {{articles.number}}</span>
+                        <span> ... </span>
 
-                <!-- if it is not the last page, the down button is displayed -->
-                {% if articles.has_next %}
-                <a href="? Page article.next_page_number" class="btn btn-secondary">{{articles.next_page_number}}</a>
-                <span> ... </span>
-                <a href="? Page articles.paginator.num_pages = {{}}" class="btn" btn-success>{{articles.paginator.num_pages}}</a>
-                {% endif %}
-            </span>
+                        <a href="?page={{articles.previous_page_number}}" class="btn btn-secondary">
+                            {{articles.previous_page_number}}
+                        </a>
+                        {% endif %}
+
+                        <!-- current page -->
+                        <span class="current btn btn-dange btn-lg">
+                            {{articles.number}}
+                        </span>
+
+                        <!-- if it is not the last page, the down button is displayed -->
+                        {% if articles.has_next %}
+                        <a href="?page={{article.next_page_number}}" class="btn btn-secondary">
+                            {{articles.next_page_number}}
+                        </a>
+
+                        <span> ... </span>
+
+                        <a href="?page={{articles.paginator.num_pages}}" class="btn btn-success">
+                            {{articles.paginator.num_pages}}
+                        </a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endblock content %}
+        {% endblock content %}
